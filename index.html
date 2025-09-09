@@ -1,0 +1,1589 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PPT</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #4a6cf7;
+            --primary-dark: #3b5be3;
+            --secondary: #8b5cf6;
+            --accent: #ec4899;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --gray: #64748b;
+            --light-gray: #e2e8f0;
+            --card-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+            color: var(--dark);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        /* Pantalla de Caos - MEJORADA */
+        #chaos-screen {
+            width: 100%;
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 45px;
+            box-shadow: var(--card-shadow);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--light-gray);
+            transform: translateY(0);
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+        }
+        
+        #chaos-screen:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+        
+        .chaos-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .logo {
+            font-size: 30px;
+            font-weight: 800;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            letter-spacing: -0.5px;
+        }
+        
+        .logo i {
+            color: var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 32px;
+        }
+        
+        .fake-btn {
+            background: var(--light);
+            color: var(--gray);
+            border: 1px solid var(--light-gray);
+            padding: 12px 22px;
+            border-radius: 12px;
+            cursor: pointer;
+            margin-left: 12px;
+            transition: var(--transition);
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+        }
+        
+        .fake-btn:hover {
+            background: #edf2f7;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.07);
+        }
+        
+        .captcha-container {
+            background: linear-gradient(to bottom right, #f8fafc, #f1f5f9);
+            padding: 35px;
+            border-radius: 20px;
+            margin-bottom: 35px;
+            position: relative;
+            border: 1px solid var(--light-gray);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
+        }
+        
+        .captcha-title {
+            font-size: 28px;
+            margin-bottom: 25px;
+            color: var(--dark);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .captcha-title i {
+            color: var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .captcha-box {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        #captcha-input {
+            flex: 1;
+            padding: 18px 22px;
+            border-radius: 14px;
+            border: 1px solid var(--light-gray);
+            background: #fff;
+            color: var(--dark);
+            font-size: 17px;
+            transition: var(--transition);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.04);
+            font-weight: 500;
+        }
+        
+        #captcha-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(74, 108, 247, 0.15);
+        }
+        
+        #captcha-validate {
+            padding: 18px 32px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 6px 15px rgba(74, 108, 247, 0.3);
+            letter-spacing: 0.5px;
+        }
+        
+        #captcha-validate:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(74, 108, 247, 0.4);
+        }
+        
+        .captcha-hint {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        #captcha-hint {
+            padding: 14px 22px;
+            background: #fff;
+            color: var(--gray);
+            border: 1px solid var(--light-gray);
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+        
+        #captcha-hint:hover {
+            background: #f7fafc;
+            border-color: #cbd5e0;
+            transform: translateY(-2px);
+        }
+        
+        #captcha-msg {
+            margin-top: 20px;
+            color: var(--gray);
+            font-style: italic;
+            min-height: 24px;
+            padding: 14px 18px;
+            background: #f8fafc;
+            border-radius: 10px;
+            border-left: 4px solid var(--primary);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .chaos-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            gap: 20px;
+        }
+        
+        .fake-action {
+            padding: 18px 30px;
+            background: var(--light);
+            color: var(--gray);
+            border: 1px solid var(--light-gray);
+            border-radius: 14px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .fake-action:hover {
+            background: #edf2f7;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.07);
+        }
+        
+        .meme-container {
+            margin-top: 45px;
+            text-align: center;
+            padding: 25px;
+            background: linear-gradient(to bottom right, #f8fafc, #f1f5f9);
+            border-radius: 18px;
+            border: 1px solid var(--light-gray);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .meme-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(to right, var(--primary), var(--secondary), var(--accent));
+            border-radius: 18px 18px 0 0;
+        }
+        
+        .meme-title {
+            font-size: 19px;
+            margin-bottom: 18px;
+            color: var(--dark);
+            font-weight: 600;
+        }
+        
+        #meme1 {
+            max-width: 100%;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--light-gray);
+        }
+        
+        #meme1:hover {
+            transform: scale(1.03) rotate(1deg);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        #thief {
+            position: absolute;
+            width: 65px;
+            height: 65px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 100;
+            transition: var(--transition);
+            box-shadow: 0 8px 25px rgba(74, 108, 247, 0.5);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            animation: float 3s ease-in-out infinite;
+            display: none;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        /* Pantalla de Presentación */
+        #presentation-screen {
+            display: none;
+            width: 100%;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #fff;
+            border-radius: 24px;
+            padding: 35px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--light-gray);
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        
+        #presentation-screen.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        .presentation-header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 35px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .presentation-title {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--dark);
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .slide-container {
+            width: 100%;
+            position: relative;
+            margin-bottom: 35px;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+            background: #000;
+            aspect-ratio: 16/9;
+        }
+        
+        .slide {
+            display: none;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            position: relative;
+        }
+        
+        .slide.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        /* Estilos para publicidad */
+        .ad-overlay {
+            position: absolute;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.3s ease;
+        }
+        
+        .ad-content {
+            text-align: center;
+            padding: 10px;
+        }
+        
+        .ad-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2d3748;
+        }
+        
+        .ad-description {
+            font-size: 14px;
+            margin-bottom: 15px;
+            color: #4a5568;
+        }
+        
+        .ad-cta {
+            display: inline-block;
+            background: #4299e1;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+        
+        .ad-cta:hover {
+            background: #3182ce;
+        }
+        
+        .close-ad {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #718096;
+            font-weight: bold;
+        }
+        
+        .close-ad:hover {
+            color: #e53e3e;
+        }
+        
+        .logo-small {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 100px !important;
+            height: auto;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .presentation-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            margin-top: 25px;
+            gap: 15px;
+        }
+        
+        .nav-btn {
+            padding: 16px 30px;
+            background: var(--light);
+            color: var(--gray);
+            border: 1px solid var(--light-gray);
+            border-radius: 14px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .nav-btn:hover {
+            background: #edf2f7;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.07);
+        }
+        
+        .progress-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex: 1;
+            max-width: 50%;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #edf2f7;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        #presentation-fill {
+            height: 100%;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            width: 0%;
+            transition: width 0.4s ease;
+            border-radius: 10px;
+        }
+        
+        .slide-counter {
+            font-weight: 700;
+            color: var(--dark);
+            min-width: 80px;
+            text-align: center;
+            font-size: 15px;
+        }
+        
+        #presentation-exit {
+            background: #fef2f2;
+            color: var(--danger);
+            border-color: #fed7d7;
+        }
+        
+        #presentation-exit:hover {
+            background: #fee2e2;
+        }
+        
+        /* ===== Slide final con botones ===== */
+        .final-slide {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            background: #0f172a;
+            color: white;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .final-title {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .final-text {
+            font-size: 1.3rem;
+            color: #cbd5e1;
+            margin-bottom: 40px;
+        }
+
+        .final-slide-buttons {
+            display: flex;
+            gap: 30px;
+        }
+
+        .final-btn {
+            font-size: 1.4rem;
+            padding: 20px 40px;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.2s ease, background 0.3s ease;
+            min-width: 220px;
+        }
+
+        .final-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Botón primario */
+        .final-btn-primary {
+            background: #0ea5e9;
+            color: white;
+        }
+
+        .final-btn-primary:hover {
+            background: #0284c7;
+        }
+
+        /* Botón secundario */
+        .final-btn-secondary {
+            background: #f1f5f9;
+            color: #0f172a;
+        }
+
+        .final-btn-secondary:hover {
+            background: #e2e8f0;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Notificaciones mejoradas */
+        .toast {
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            bottom: 30px;
+            background: var(--dark);
+            color: #fff;
+            padding: 16px 26px;
+            border-radius: 14px;
+            z-index: 99999;
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            font-weight: 500;
+            max-width: 90%;
+            text-align: center;
+            pointer-events: none;
+        }
+        
+        .toast.show {
+            opacity: 0.97;
+            transform: translateX(-50%) translateY(0);
+        }
+        
+        /* Modal mejorado */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        
+        .modal.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 450px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+        
+        .modal.show .modal-content {
+            transform: scale(1);
+        }
+        
+        .modal h3 {
+            margin-bottom: 18px;
+            color: var(--dark);
+            font-size: 24px;
+            font-weight: 700;
+        }
+        
+        .modal p {
+            margin-bottom: 28px;
+            color: var(--gray);
+            line-height: 1.5;
+        }
+        
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        
+        .modal-btn {
+            padding: 14px 28px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+        }
+        
+        .modal-btn-cancel {
+            background: var(--light);
+            color: var(--gray);
+            border: 1px solid var(--light-gray);
+        }
+        
+        .modal-btn-confirm {
+            background: var(--danger);
+            color: white;
+        }
+        
+        .modal-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Efectos de transición */
+        .transition-effect {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+        
+        /* Responsive mejorado */
+        @media (max-width: 900px) {
+            .chaos-header {
+                flex-direction: column;
+                gap: 20px;
+                align-items: flex-start;
+            }
+            
+            .header-buttons {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+                width: 100%;
+            }
+            
+            .fake-btn {
+                margin-left: 0;
+                flex: 1;
+                min-width: 120px;
+                justify-content: center;
+            }
+            
+            .chaos-actions {
+                flex-direction: column;
+            }
+            
+            .captcha-box {
+                flex-direction: column;
+            }
+            
+            #captcha-validate {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .presentation-controls {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+            
+            .progress-container {
+                max-width: 100%;
+                order: 3;
+            }
+            
+            #chaos-screen, #presentation-screen {
+                padding: 25px;
+            }
+            
+            .captcha-container {
+                padding: 25px;
+            }
+            
+            .final-slide-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .final-btn {
+                font-size: 1.1rem;
+                padding: 15px 25px;
+                min-width: auto;
+            }
+
+            /* Publicidad responsive */
+            .ad-overlay {
+                width: 80% !important;
+                left: 10% !important;
+                right: 10% !important;
+                max-width: none !important;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .logo {
+                font-size: 24px;
+            }
+            
+            .captcha-title {
+                font-size: 20px;
+            }
+            
+            .fake-btn, .fake-action, .nav-btn {
+                padding: 14px 20px;
+                font-size: 13px;
+            }
+            
+            .modal-content {
+                padding: 25px;
+                margin: 20px;
+            }
+            
+            .modal-buttons {
+                flex-direction: column;
+            }
+            
+            .final-title {
+                font-size: 1.8rem;
+            }
+            
+            .final-text {
+                font-size: 1rem;
+            }
+
+            /* Publicidad móvil */
+            .ad-overlay {
+                padding: 10px !important;
+                width: 90% !important;
+                left: 5% !important;
+                right: 5% !important;
+            }
+            
+            .ad-title {
+                font-size: 16px;
+            }
+            
+            .ad-description {
+                font-size: 12px;
+            }
+        }
+        
+        /* Efectos especiales */
+        .glitch-effect {
+            animation: glitch 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+        }
+        
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-5px, 5px); }
+            40% { transform: translate(-5px, -5px); }
+            60% { transform: translate(5px, 5px); }
+            80% { transform: translate(5px, -5px); }
+            100% { transform: translate(0); }
+        }
+        
+        .shake-effect {
+            animation: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-8px); }
+            20%, 40%, 60%, 80% { transform: translateX(8px); }
+        }
+        
+        /* Efecto de carga */
+        .loading-dots {
+            display: inline-flex;
+            gap: 4px;
+        }
+        
+        .loading-dots span {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--primary);
+            animation: loading 1.4s infinite ease-in-out both;
+        }
+        
+        .loading-dots span:nth-child(1) { animation-delay: -0.32s; }
+        .loading-dots span:nth-child(2) { animation-delay: -0.16s; }
+        
+        @keyframes loading {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+
+        /* Mejoras visuales adicionales */
+        .decoration-element {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(74, 108, 247, 0.1), rgba(139, 92, 246, 0.1));
+            filter: blur(40px);
+            z-index: -1;
+        }
+        
+        .decoration-1 {
+            top: -50px;
+            right: -50px;
+        }
+        
+        .decoration-2 {
+            bottom: -50px;
+            left: -50px;
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.1), rgba(245, 158, 11, 0.1));
+        }
+        
+        .header-subtitle {
+            font-size: 16px;
+            color: var(--gray);
+            margin-top: 8px;
+            font-weight: 400;
+        }
+        
+        .input-with-icon {
+            position: relative;
+            width: 100%;
+        }
+        
+        .input-with-icon i {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+        }
+        
+        .input-with-icon input {
+            padding-left: 45px !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="transition-effect" id="transition-effect"></div>
+    
+    <div class="container">
+        <!-- Pantalla de Caos - MEJORADA -->
+        <div id="chaos-screen">
+            <div class="decoration-element decoration-1"></div>
+            <div class="decoration-element decoration-2"></div>
+            
+            <div class="chaos-header">
+                <div>
+                    <div class="logo">
+                        <i class="fas fa-university"></i>
+                        <span>Sistema Universitario</span>
+                    </div>
+                    <div class="header-subtitle">Desorden universitario desde el inicio</div>
+                </div>
+                <div class="header-buttons">
+                    <button class="fake-btn"><i class="fas fa-question-circle"></i> CAMI TIKET?</button>
+                    <button class="fake-btn"><i class="fas fa-cog"></i> Y  PERRY?</button>
+                    <button class="fake-btn"><i class="fas fa-sign-out-alt"></i> Abandonar semestrE</button>
+                </div>
+            </div>
+            
+            <div class="captcha-container">
+                <div class="captcha-title">
+                    <i class="fas fa-robot"></i>
+                    <span>Verificación Anti-Bots (?)</span>
+                </div>
+                <div class="captcha-box">
+                    <div class="input-with-icon">
+                        <i class="fas fa-key"></i>
+                        <input type="text" id="captcha-input" placeholder="Ingrese la palabra mágica">
+                    </div>
+                    <button id="captcha-validate">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Validar</span>
+                    </button>
+                </div>
+                <div class="captcha-hint">
+                    <button id="captcha-hint">
+                        <i class="fas fa-lightbulb"></i>
+                        <span>¿Necesitas una pista?</span>
+                    </button>
+                    <div id="captcha-msg"></div>
+                </div>
+            </div>
+            
+            <div class="chaos-actions">
+                <button id="chaos-next" class="fake-action">
+                    <i class="fas fa-arrow-right"></i>
+                    <span>?</span>
+                </button>
+                <button id="chaos-random" class="fake-action">
+                    <i class="fas fa-random"></i>
+                    <span>ayuda</span>
+                </button>
+                <button id="chaos-bork" class="fake-action">
+                    <i class="fas fa-paw"></i>
+                    <span>Bork</span>
+                </button>
+            </div>
+            
+            <div class="meme-container">
+                <div class="meme-title">¿Todo fallando? Prueba suerte con el meme:</div>
+                <img id="meme1" src="slides/meme1.jpg" alt="Meme académico" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22200%22><rect width=%22300%22 height=%22200%22 fill=%22%23f1f5f9%22/><text x=%22150%22 y=%22100%22 font-family=%22Arial%22 font-size=%2218%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22 fill=%22%234a5568%22>Meme no disponible</text></svg>'">
+            </div>
+            
+            <div id="thief">
+                <i class="fas fa-running"></i>
+            </div>
+        </div>
+        
+        <!-- Pantalla de Presentación -->
+        <div id="presentation-screen">
+            <div class="presentation-header">
+                <div class="presentation-title">Ppt</div>
+            </div>
+            
+            <div class="slide-container">
+                <!-- Slide falso sorpresa -->
+                <div class="slide fake" data-index="-1">
+                    <img src="slides/explosion-12389.gif" alt="Susto" onerror="this.style.display='none'">
+                </div>
+
+                <!-- Slides reales -->
+                <div class="slide active" data-index="0">
+                    <img src="slides/0001.jpg" alt="Slide 1" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22450%22><rect width=%22800%22 height=%22450%22 fill=%22%23f1f5f9%22/><text x=%22400%22 y=%22225%22 font-family=%22Arial%22 font-size=%2224%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22 fill=%22%234a5568%22>Slide 1</text></svg>'">
+                    <!-- Publicidad para esta slide -->
+                    <div class="ad-overlay" style="top: 10%; left: 5%; width: 30%;" data-ad-index="0">
+                        <button class="close-ad">×</button>
+                        <div class="ad-content">
+                           <div class="ad-image">
+    <img src="slides/publicidad2.jpg" alt="Imagen de la oferta" style="max-width:100%; height:auto;">
+</div>
+<a href="#" class="ad-cta">Ver ahora</a>
+
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Segundo slide convertido en video -->
+                <div class="slide" data-index="1">
+                    <video width="800" height="450" controls>
+                        <source src="slides/video.mp4" type="video/mp4">
+                        Tu navegador no soporta el elemento de video.
+                    </video>
+                </div>
+                
+                <div class="slide" data-index="2">
+                    <img src="slides/0002.jpg" alt="Slide 2" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22450%22><rect width=%22800%22 height=%22450%22 fill=%22%23f1f5f9%22/><text x=%22400%22 y=%22225%22 font-family=%22Arial%22 font-size=%2224%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22 fill=%22%234a5568%22>Slide 2</text></svg>'">
+                    <!-- Publicidad para esta slide -->
+                    <div class="ad-overlay" style="top: 10%; right: 5%; width: 30%;" data-ad-index="2">
+                        <button class="close-ad">×</button>
+                        <div class="ad-content">
+                    <div class="ad-image">
+    <img src="slides/publicidad1.jpg" alt="Imagen de la oferta" style="max-width:100%; height:auto;">
+</div>
+<a href="#" class="ad-cta">Ver ahora</a>
+
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="slide" data-index="3">
+                    <img src="slides/0003.jpg" alt="Slide 3" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22450%22><rect width=%22800%22 height=%22450%22 fill=%22%23f1f5f9%22/><text x=%22400%22 y=%22225%22 font-family=%22Arial%22 font-size=%2224%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22 fill=%22%234a5568%22>Slide 3</text></svg>'">
+                </div>
+                
+                <div class="slide" data-index="4">
+                    <img src="slides/0005.jpg" alt="Slide 4" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22450%22><rect width=%22800%22 height=%22450%22 fill=%22%23f1f5f9%22/><text x=%22400%22 y=%22225%22 font-family=%22Arial%22 font-size=%2224%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22 fill=%22%234a5568%22>Slide 4</text></svg>'">
+                    <!-- Publicidad para esta slide -->
+                    <div class="ad-overlay" style="bottom: 10%; left: 5%; width: 35%;" data-ad-index="4">
+                        <button class="close-ad">×</button>
+                        <div class="ad-content">
+                           <div class="ad-image">
+    <img src="slides/publicidad3.jpg" alt="Imagen de la oferta" style="max-width:100%; height:auto;">
+</div>
+<a href="#" class="ad-cta">Ver ahora</a>
+
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="slide" data-index="5">
+                    <img src="slides/0007.jpg" alt="Slide 5" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22450%22><rect width=%22800%22 height=%22450%22 fill=%22%23f1f5f9%22/><text x=%22400%22 y=%22225%22 font-family=%22Arial%22 font-size=%2224%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22 fill=%22%234a5568%22>Slide 5</text></svg>'">
+                </div>
+                
+                <div class="slide" data-index="6">
+                    <img src="slides/0008.jpg" alt="Slide 6" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22450%22><rect width=%22800%22 height=%22450%22 fill=%22%23f1f5f9%22/><text x=%22400%22 y=%22225%22 font-family=%22Arial%22 font-size=%2224%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22 fill=%22%234a5568%22>Slide 6</text></svg>'">
+                    <!-- Publicidad para esta slide -->
+                    <div class="ad-overlay" style="top: 50%; left: 50%; transform: translate(-50%, -50%); width: 40%;" data-ad-index="6">
+                        <button class="close-ad">×</button>
+                        <div class="ad-content">
+                   <div class="ad-image">
+    <img src="slides/publicidad4.png" alt="Imagen de la oferta" style="max-width:100%; height:auto;">
+</div>
+<a href="#" class="ad-cta">Ver ahora</a>
+
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="slide" data-index="7">
+                    <img src="slides/0009.jpg" alt="Slide 7" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22450%22><rect width=%22800%22 height=%22450%22 fill=%22%23f1f5f9%22/><text x=%22400%22 y=%22225%22 font-family=%22Arial%22 font-size=%2224%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22 fill=%22%234a5568%22>Slide 7</text></svg>'">
+                </div>
+                
+                <div class="slide" data-index="8">
+                    <img src="slides/0010.jpg" alt="Slide 8" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22450%22><rect width=%22800%22 height=%22450%22 fill=%22%23f1f5f9%22/><text x=%22400%22 y=%22225%22 font-family=%22Arial%22 font-size=%2224%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22 fill=%22%234a5568%22>Slide 8</text></svg>'">
+                </div>
+                
+                <div class="slide" data-index="11">
+                    <img src="slides/0013.jpg" alt="Slide 11" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22450%22><rect width=%22800%22 height=%22450%22 fill=%22%23f1f5f9%22/><text x=%22400%22 y=%22225%22 font-family=%22Arial%22 font-size=%2224%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22 fill=%22%234a5568%22>Slide 11</text></svg>'">
+                </div>
+                
+                <div class="slide" data-index="12">
+                    <img src="slides/0014.jpg" alt="Slide 12" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22450%22><rect width=%22800%22 height=%22450%22 fill=%22%23f1f5f9%22/><text x=%22400%22 y=%22225%22 font-family=%22Arial%22 font-size=%2224%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22 fill=%22%234a5568%22>Slide 12</text></svg>'">
+                    <!-- Publicidad para esta slide -->
+                    <div class="ad-overlay" style="top: 15%; right: 10%; width: 30%;" data-ad-index="12">
+                        <button class="close-ad">×</button>
+                        <div class="ad-content">
+                        <div class="ad-image">
+    <img src="slides/publicidad5.png" alt="Imagen de la oferta" style="max-width:100%; height:auto;">
+</div>
+<a href="#" class="ad-cta">Ver ahora</a>
+
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="slide" data-index="13">
+                    <img src="slides/0011.jpg" alt="Slide 13" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22450%22><rect width=%22800%22 height=%22450%22 fill=%22%23f1f5f9%22/><text x=%22400%22 y=%22225%22 font-family=%22Arial%22 font-size=%2224%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22 fill=%22%234a5568%22>Slide 13</text></svg>'">
+                </div>
+                
+                <div class="slide" data-index="14">
+                    <img src="slides/0015.jpg" alt="Slide 14" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22450%22><rect width=%22800%22 height=%22450%22 fill=%22%23f1f5f9%22/><text x=%22400%22 y=%22225%22 font-family=%22Arial%22 font-size=%2224%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22 fill=%22%234a5568%22>Slide 14</text></svg>'">
+                </div>
+                
+                <div class="slide" data-index="15">
+                    <img src="slides/0016.jpg" alt="Slide 15" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22450%22><rect width=%22800%22 height=%22450%22 fill=%22%23f1f5f9%22/><text x=%22400%22 y=%22225%22 font-family=%22Arial%22 font-size=%2224%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22 fill=%22%234a5568%22>Slide 15</text></svg>'">
+                </div>
+                
+                <div class="slide" data-index="16">
+                    <img src="slides/0017.jpg" alt="Slide 16" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22450%22><rect width=%22800%22 height=%22450%22 fill=%22%23f1f5f9%22/><text x=%22400%22 y=%22225%22 font-family=%22Arial%22 font-size=%2224%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22 fill=%22%234a5568%22>Slide 16</text></svg>'">
+                    <!-- Publicidad para esta slide -->
+                    <div class="ad-overlay" style="bottom: 20%; left: 10%; width: 35%;" data-ad-index="16">
+                        <button class="close-ad">×</button>
+                        <div class="ad-content">
+                  <div class="ad-image">
+    <img src="slides/publicidad6.png" alt="Imagen de la oferta" style="max-width:100%; height:auto;">
+</div>
+<a href="#" class="ad-cta">Ver ahora</a>
+
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Slide 17: Slide final con botones grandes -->
+                <div class="slide" data-index="17">
+                    <div class="final-slide">
+                        <h2 class="final-title">¡Presentación Finalizada!</h2>
+                        <p class="final-text">Gracias por ver la presentación, ¿qué deseas hacer ahora?</p>
+                        <div class="final-slide-buttons">
+                            <button class="final-btn final-btn-primary" 
+                                    onclick="window.location.href='https://www.figma.com/proto/jshe8ZgqzSoSfPVk2wLOCL/Dynamood-Final?pageid=0%3A1&node-id=257-44&p=f&viewport=210%2C191%2C0.03&t=FVs0TpwSCybzTlm3-'">
+                                Prototipo
+                            </button>                           
+                            <button class="final-btn final-btn-secondary" 
+                                    onclick="window.location.href='https://www.notion.so/Scrum-Dynamood-257dd986661180d39007f349194c0197'">
+                                Notion
+                            </button>  
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Controles de navegación -->
+            <div class="presentation-controls">
+                <button id="presentation-prev" class="nav-btn">
+                    <i class="fas fa-chevron-left"></i>
+                    <span>Anterior</span>
+                </button>
+
+                <div class="progress-container">
+                    <div class="progress-bar"><div id="presentation-fill"></div></div>
+                    <div class="slide-counter">Slide <span id="presentation-idx">1</span>/18</div>
+                </div>
+
+                <button id="presentation-next" class="nav-btn">
+                    <span>Siguiente</span>
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+
+                <button id="presentation-exit" class="nav-btn">
+                    <i class="fas fa-times"></i>
+                    <span>Salir</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="toast" id="toast"></div>
+    
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <h3>¿Estás seguro?</h3>
+            <p>¿Realmente quieres salir de la presentación? Todo tu progreso se perderá.</p>
+            <div class="modal-buttons">
+                <button class="modal-btn modal-btn-cancel" id="modal-cancel">Cancelar</button>
+                <button class="modal-btn modal-btn-confirm" id="modal-confirm">Sí, salir</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elementos DOM
+            const chaosScreen = document.getElementById('chaos-screen');
+            const presentationScreen = document.getElementById('presentation-screen');
+            const transitionEffect = document.getElementById('transition-effect');
+            const thief = document.getElementById('thief');
+            const captchaInput = document.getElementById('captcha-input');
+            const captchaValidate = document.getElementById('captcha-validate');
+            const captchaHint = document.getElementById('captcha-hint');
+            const captchaMsg = document.getElementById('captcha-msg');
+            const chaosNext = document.getElementById('chaos-next');
+            const chaosRandom = document.getElementById('chaos-random');
+            const chaosBork = document.getElementById('chaos-bork');
+            const meme1 = document.getElementById('meme1');
+            const prevBtn = document.getElementById('presentation-prev');
+            const nextBtn = document.getElementById('presentation-next');
+            const exitBtn = document.getElementById('presentation-exit');
+            const fillBar = document.getElementById('presentation-fill');
+            const slideIdx = document.getElementById('presentation-idx');
+            const slides = document.querySelectorAll('#presentation-screen .slide:not(.fake)');
+            const fakeSlide = document.querySelector('#presentation-screen .slide.fake');
+            const toast = document.getElementById('toast');
+            const modal = document.getElementById('modal');
+            const modalCancel = document.getElementById('modal-cancel');
+            const modalConfirm = document.getElementById('modal-confirm');
+            
+            // Variables de estado
+            let currentSlide = 0;
+            let isTransitioning = false;
+            
+            // Palabras mágicas
+            const magicWords = ['presentación', 'dejamegraduar', 'LAMALAPARALOSADMINISTRATIVOS', '3 es nota', 'proyecto', ];
+            
+            // Inicializar
+            init();
+            
+            function init() {
+                // Inicializar ladrón
+                moveThief();
+                
+                // Event listeners
+                captchaValidate.addEventListener('click', validateCaptcha);
+                captchaHint.addEventListener('click', showHint);
+                chaosNext.addEventListener('click', goToPresentation);
+                chaosRandom.addEventListener('click', randomAction);
+                chaosBork.addEventListener('click', borkAction);
+                meme1.addEventListener('click', memeAction);
+                prevBtn.addEventListener('click', prevSlide);
+                nextBtn.addEventListener('click', nextSlide);
+                exitBtn.addEventListener('click', showExitModal);
+                modalCancel.addEventListener('click', hideModal);
+                modalConfirm.addEventListener('click', exitPresentation);
+                
+                // Cerrar publicidad al hacer clic en el botón
+                document.querySelectorAll('.close-ad').forEach(button => {
+                    button.addEventListener('click', function() {
+                        this.parentElement.style.opacity = '0';
+                        setTimeout(() => {
+                            this.parentElement.style.display = 'none';
+                        }, 300);
+                    });
+                });
+                
+                // Teclado shortcuts
+                document.addEventListener('keydown', handleKeydown);
+                
+                // Inicializar presentación
+                updateSlideCounter();
+            }
+            
+            // Funciones para la pantalla de caos
+            function validateCaptcha() {
+                const value = captchaInput.value.trim().toLowerCase();
+                
+                if (magicWords.includes(value)) {
+                    captchaMsg.textContent = '¡Validación exitosa! Redirigiendo...';
+                    captchaMsg.style.color = 'var(--success)';
+                    captchaInput.style.borderColor = 'var(--success)';
+                    
+                    // Efecto de validación exitosa
+                    captchaValidate.style.background = 'linear-gradient(135deg, var(--success), #34d399)';
+                    
+                    setTimeout(() => {
+                        goToPresentation();
+                    }, 1000);
+                } else {
+                    captchaMsg.textContent = 'Palabra incorrecta. Intenta con otra.';
+                    captchaMsg.style.color = 'var(--danger)';
+                    captchaInput.style.borderColor = 'var(--danger)';
+                    
+                    // Efecto de error
+                    captchaValidate.classList.add('shake-effect');
+                    setTimeout(() => {
+                        captchaValidate.classList.remove('shake-effect');
+                    }, 500);
+                }
+            }
+            
+            function showHint() {
+                const randomWord = magicWords[Math.floor(Math.random() * magicWords.length)];
+                captchaMsg.textContent = `Pista: La palabra está relacionada con "${randomWord}"`;
+                captchaMsg.style.color = 'var(--warning)';
+                
+                // Efecto de pista
+                captchaHint.style.background = 'var(--warning)';
+                captchaHint.style.color = 'white';
+                setTimeout(() => {
+                    captchaHint.style.background = '';
+                    captchaHint.style.color = '';
+                }, 1000);
+            }
+            
+            function goToPresentation() {
+                if (isTransitioning) return;
+                isTransitioning = true;
+                
+                // Efecto de transición
+                transitionEffect.style.opacity = '1';
+                
+                setTimeout(() => {
+                    chaosScreen.style.display = 'none';
+                    presentationScreen.style.display = 'flex';
+                    
+                    setTimeout(() => {
+                        presentationScreen.classList.add('active');
+                        transitionEffect.style.opacity = '0';
+                        isTransitioning = false;
+                    }, 300);
+                }, 500);
+            }
+            
+            function randomAction() {
+                // Efecto visual aleatorio
+                const effects = ['glitch-effect', 'shake-effect'];
+                const randomEffect = effects[Math.floor(Math.random() * effects.length)];
+                
+                chaosScreen.classList.add(randomEffect);
+                setTimeout(() => {
+                    chaosScreen.classList.remove(randomEffect);
+                }, 1000);
+                
+                showToast('Acción aleatoria ejecutada. ¿Sorprendido?');
+            }
+            
+            function borkAction() {
+                // Efecto de bork (divertido)
+                document.body.style.overflow = 'hidden';
+                
+                const bork = document.createElement('div');
+                bork.style.position = 'fixed';
+                bork.style.top = '0';
+                bork.style.left = '0';
+                bork.style.width = '100%';
+                bork.style.height = '100%';
+                bork.style.background = 'rgba(0,0,0,0.8)';
+                bork.style.display = 'flex';
+                bork.style.alignItems = 'center';
+                bork.style.justifyContent = 'center';
+                bork.style.zIndex = '9999';
+                bork.style.color = 'white';
+                bork.style.fontSize = '80px';
+                bork.style.fontWeight = 'bold';
+                bork.textContent = 'BORK!';
+                bork.style.cursor = 'pointer';
+                
+                document.body.appendChild(bork);
+                
+                bork.addEventListener('click', function() {
+                    document.body.removeChild(bork);
+                    document.body.style.overflow = '';
+                });
+                
+                setTimeout(() => {
+                    if (document.body.contains(bork)) {
+                        document.body.removeChild(bork);
+                        document.body.style.overflow = '';
+                    }
+                }, 2000);
+            }
+            
+            function memeAction() {
+                // Efecto de meme
+                meme1.style.transform = 'scale(1.2) rotate(5deg)';
+                setTimeout(() => {
+                    meme1.style.transform = '';
+                }, 500);
+                
+                showToast('¡Meme activado! Risas garantizadas.');
+            }
+            
+            function moveThief() {
+                // Mover el ladrón a una posición aleatoria
+                const x = Math.random() * (chaosScreen.offsetWidth - 100);
+                const y = Math.random() * (chaosScreen.offsetHeight - 100);
+                
+                thief.style.left = `${x}px`;
+                thief.style.top = `${y}px`;
+                thief.style.display = 'flex';
+                
+                // Cambiar posición periódicamente
+                setTimeout(moveThief, 3000);
+            }
+            
+            // Funciones para la presentación
+            function prevSlide() {
+                if (currentSlide > 0) {
+                    changeSlide(currentSlide - 1);
+                } else {
+                    showToast('Ya estás en la primera diapositiva');
+                }
+            }
+            
+            function nextSlide() {
+                if (currentSlide < slides.length - 1) {
+                    changeSlide(currentSlide + 1);
+                } else {
+                    // Si estamos en la última diapositiva, mostrar el slide falso sorpresa
+                    showFakeSlide();
+                }
+            }
+            
+            function changeSlide(index) {
+                if (isTransitioning) return;
+                
+                slides[currentSlide].classList.remove('active');
+                slides[index].classList.add('active');
+                currentSlide = index;
+                
+                updateSlideCounter();
+            }
+            
+            function showFakeSlide() {
+                if (isTransitioning) return;
+                isTransitioning = true;
+                
+                // Ocultar slide actual
+                slides[currentSlide].classList.remove('active');
+                
+                // Mostrar slide falso
+                fakeSlide.classList.add('active');
+                
+                // Reproducir sonido de susto si es posible
+                try {
+                    const audio = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-funny-cartoon-scream-381.mp3');
+                    audio.volume = 0.3;
+                    audio.play();
+                } catch (e) {
+                    console.log('No se pudo reproducir el audio');
+                }
+                
+                // Después de un tiempo, volver al slide actual
+                setTimeout(() => {
+                    fakeSlide.classList.remove('active');
+                    slides[currentSlide].classList.add('active');
+                    isTransitioning = false;
+                }, 1500);
+            }
+            
+            function updateSlideCounter() {
+                slideIdx.textContent = currentSlide + 1;
+                fillBar.style.width = `${(currentSlide / (slides.length - 1)) * 100}%`;
+            }
+            
+            function showExitModal() {
+                modal.classList.add('show');
+            }
+            
+            function hideModal() {
+                modal.classList.remove('show');
+            }
+            
+            function exitPresentation() {
+                hideModal();
+                
+                // Efecto de transición
+                transitionEffect.style.opacity = '1';
+                
+                setTimeout(() => {
+                    presentationScreen.classList.remove('active');
+                    
+                    setTimeout(() => {
+                        presentationScreen.style.display = 'none';
+                        chaosScreen.style.display = 'block';
+                        transitionEffect.style.opacity = '0';
+                    }, 300);
+                }, 500);
+            }
+            
+            function restartPresentation() {
+                changeSlide(0);
+            }
+            
+            // Utilidades
+            function handleKeydown(e) {
+                // Navegación con teclado
+                if (presentationScreen.style.display === 'flex') {
+                    if (e.key === 'ArrowLeft') {
+                        prevSlide();
+                    } else if (e.key === 'ArrowRight') {
+                        nextSlide();
+                    } else if (e.key === 'Escape') {
+                        showExitModal();
+                    }
+                }
+            }
+            
+            function showToast(message) {
+                toast.textContent = message;
+                toast.classList.add('show');
+                
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 3000);
+            }
+            
+            // Hacer el ladrón arrastrable
+            let isDragging = false;
+            let offsetX, offsetY;
+            
+            thief.addEventListener('mousedown', function(e) {
+                isDragging = true;
+                offsetX = e.clientX - thief.getBoundingClientRect().left;
+                offsetY = e.clientY - thief.getBoundingClientRect().top;
+                thief.style.cursor = 'grabbing';
+            });
+            
+            document.addEventListener('mousemove', function(e) {
+                if (isDragging) {
+                    thief.style.left = `${e.clientX - offsetX}px`;
+                    thief.style.top = `${e.clientY - offsetY}px`;
+                }
+            });
+            
+            document.addEventListener('mouseup', function() {
+                isDragging = false;
+                thief.style.cursor = 'grab';
+            });
+            
+            // Soporte táctil para el ladrón
+            thief.addEventListener('touchstart', function(e) {
+                isDragging = true;
+                const touch = e.touches[0];
+                offsetX = touch.clientX - thief.getBoundingClientRect().left;
+                offsetY = touch.clientY - thief.getBoundingClientRect().top;
+                e.preventDefault();
+            });
+            
+            document.addEventListener('touchmove', function(e) {
+                if (isDragging) {
+                    const touch = e.touches[0];
+                    thief.style.left = `${touch.clientX - offsetX}px`;
+                    thief.style.top = `${touch.clientY - offsetY}px`;
+                    e.preventDefault();
+                }
+            });
+            
+            document.addEventListener('touchend', function() {
+                isDragging = false;
+            });
+        });
+    </script>
+</body>
+</html>
